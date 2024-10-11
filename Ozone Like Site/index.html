@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eray Video Games Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .search-bar {
+            flex-grow: 1; 
+            margin: 0 20px;
+        }
+
+        #search-input {
+            width: 75%; 
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Стилове за количката */
+        .cart {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .cart-item {
+            margin-bottom: 10px;
+        }
+
+        .remove-button {
+            background-color: darkorange; 
+            color: white; 
+            border: none; 
+            padding: 5px; 
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Нов стил за бутона "Изчисти количката" */
+        .clear-cart {
+            background-color: darkorange; /* Оранжев фон */
+            color: white; /* Бял текст */
+            border: none; /* Без рамка */
+            padding: 8px 10px; /* Отстъп от всички страни */
+            cursor: pointer; /* Курсор при задържане */
+            font-size: 13px; /* Размер на шрифта */
+            border-radius: 5px; /* Закръглени ъгли */
+            transition: background-color 0.3s; /* Преход при ховър */
+        }
+
+        .clear-cart:hover {
+            background-color: darkorange; /* По-тъмен оранжев при ховър */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Eray.bg</div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Какво ще търсиш днес?" onkeyup="filterGames()">
+        </div>
+    </header>
+    
+    <main>
+        <h1>Видеоигри</h1>
+        <div class="filter">
+            <div class="active-filters">
+                <p>Активни филтри:</p>
+                <p id="active-filter">Платформа: Всички</p>
+                <p id="price-filter">Цена: Всички</p>
+            </div>
+            <div class="platform-filter">
+                <label for="platform-filter">Филтрирай по платформа:</label>
+                <select id="platform-filter" onchange="filterGames()">
+                    <option value="all">Всички</option>
+                    <option value="ps5">PS5</option>
+                    <option value="ps4">PS4</option>
+                    <option value="pc">PC</option>
+                </select>
+            </div>
+            <div class="price-filter">
+                <label for="min-price">Минимална цена:</label>
+                <input type="number" id="min-price" placeholder="0" oninput="filterGames()">
+                <label for="max-price">Максимална цена:</label>
+                <input type="number" id="max-price" placeholder="999" oninput="filterGames()">
+                <button onclick="clearFilters()">Изчисти всичко</button>
+            </div>
+        </div>
+        <div class="games-grid" id="games-grid">
+            <div class="game-card" data-platform="ps5" data-price="79.99">
+                <img src="images/lego-harry-potter-collection-ps5-30.jpg" alt="LEGO Harry Potter Collection">
+                <h2>LEGO Harry Potter Collection (PS5)</h2>
+                <p>79.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('LEGO Harry Potter Collection (PS5)', 79.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="139.00">
+                <img src="images/until-dawn-ps5-30.jpg" alt="Until Dawn">
+                <h2>Until Dawn (PS5)</h2>
+                <p>139.00 лв.</p>
+                <button class="buy-button" onclick="addToCart('Until Dawn (PS5)', 139.00)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="79.99">
+                <img src="images/abathor-ps5-30.jpg" alt="Abathor">
+                <h2>Abathor (PS5)</h2>
+                <p>79.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Abathor (PS5)', 79.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="99.99">
+                <img src="images/high-on-life-ps5-30.jpg" alt="High on Life">
+                <h2>High on Life (PS5)</h2>
+                <p>99.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('High on Life (PS5)', 99.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="79.99">
+                <img src="images/naheulbeuk-s-dungeon-master---limited-edition-ps5-30.jpg" alt="Naheulbeuk's Dungeon Master">
+                <h2>Naheulbeuk's Dungeon Master - Limited Edition (PS5)</h2>
+                <p>79.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Naheulbeuk\'s Dungeon Master (PS5)', 79.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps4" data-price="99.99">
+                <img src="images/star-wars-jedi--survivor-ps4-30.jpg" alt="Star Wars Jedi: Survivor">
+                <h2>Star Wars Jedi: Survivor (PS4)</h2>
+                <p>99.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Star Wars Jedi: Survivor (PS4)', 99.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="139.99">
+                <img src="images/ea-sports-fc-25-ps5-30.jpg" alt="EA Sports FC 25 (PS5)">
+                <h2>EA Sports FC 25 (PS5)</h2>
+                <p>139.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('EA Sports FC 25 (PS5)', 139.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps4" data-price="139.99">
+                <img src="images/ea-sports-fc-25-ps4-30.jpg" alt="EA Sports FC 25 (PS4)">
+                <h2>EA Sports FC 25 (PS4)</h2>
+                <p>139.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('EA Sports FC 25 (PS4)', 139.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="ps5" data-price="159.99">
+                <img src="images/undisputed---wbc-edition-ps5-30.jpg" alt="Undisputed - WBC Edition (PS5)">
+                <h2>Undisputed - WBC Edition (PS5)</h2>
+                <p>159.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Undisputed - WBC Edition (PS5)', 159.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="pc" data-price="49.99">
+                <img src="images/battlefield-2042-pc-30.jpg" alt="Battlefield 2042 (PC)">
+                <h2>Battlefield 2042 (PC)</h2>
+                <p>49.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Battlefield 2042 (PC)', 49.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="pc" data-price    ="49.99">
+                <img src="images/xcom-2-pc---digital-30.jpg" alt="XCOM 2 (PC) - digital">
+                <h2>XCOM 2 (PC) - digital</h2>
+                <p>99.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('XCOM 2 (PC) - digital', 49.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="pc" data-price="99.99">
+                <img src="images/star-wars-jedi--survivor-pc---kod-v-kutiya-30.jpg" alt="Star Wars Jedi: Survivor (PC) - Код в кутия">
+                <h2>Star Wars Jedi: Survivor (PC) - Код в кутия</h2>
+                <p>99.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Star Wars Jedi: Survivor (PC) - Код в кутия', 99.99)">Купи</button>
+            </div>
+            <div class="game-card" data-platform="pc" data-price="119.99">
+                <img src="images/red-dead-redemption-2-pc---digital-30.jpg" alt="Red Dead Redemption 2 (PC) - digital">
+                <h2>Red Dead Redemption 2 (PC) - digital</h2>
+                <p>119.99 лв.</p>
+                <button class="buy-button" onclick="addToCart('Red Dead Redemption 2 (PC) - digital', 119.99)">Купи</button>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="cart" id="cart">
+        <h2>Вашата количка</h2>
+        <div id="cart-items"></div>
+        <div id="total-price">Общо: 0.00 лв.</div>
+        <button class="clear-cart" onclick="clearCart()">Изчисти количката</button>
+    </div>
+
+    <script>
+        let cartItems = [];
+
+        function addToCart(name, price) {
+            cartItems.push({ name, price });
+            displayCart();
+        }
+
+        function displayCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+
+            let totalPrice = 0;
+
+            cartItems.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.textContent = `${item.name} - ${item.price.toFixed(2)} лв.`;
+                
+                // Добавяме бутон за премахване
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Премахни';
+                removeButton.classList.add('remove-button');
+                removeButton.onclick = () => removeFromCart(index);
+                
+                cartItem.appendChild(removeButton);
+                cartItemsContainer.appendChild(cartItem);
+                totalPrice += item.price;
+            });
+
+            document.getElementById('total-price').textContent = `Общо: ${totalPrice.toFixed(2)} лв.`;
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1); // Премахваме артикула по индекс
+            displayCart(); // Обновяваме количката
+        }
+
+        function clearCart() {
+            cartItems = []; 
+            displayCart(); 
+        }
+
+        function clearFilters() {
+            document.getElementById('platform-filter').value = 'all';
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
+            document.getElementById('search-input').value = '';
+            filterGames();
+        }
+
+        function updateActiveFilters() {
+            const selectedPlatform = document.getElementById('platform-filter').value;
+            const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
+
+            const activeFilter = document.getElementById('active-filter');
+            const priceFilter = document.getElementById('price-filter');
+
+            // Обновяване на активния филтър за платформа
+            if (selectedPlatform === 'all') {
+                activeFilter.textContent = 'Платформа: Всички';
+            } else {
+                activeFilter.textContent = `Платформа: ${selectedPlatform.toUpperCase()}`;
+            }
+
+            // Обновяване на активния филтър за цена
+            priceFilter.textContent = `Цена: ${minPrice} - ${maxPrice}`;
+        }
+
+        function filterGames() {
+            const selectedPlatform = document.getElementById('platform-filter').value;
+            const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                const gamePlatform = card.getAttribute('data-platform');
+                const gamePrice = parseFloat(card.getAttribute('data-price'));
+                const gameName = card.querySelector('h2').textContent.toLowerCase();
+
+                const platformMatch = selectedPlatform === 'all' || gamePlatform === selectedPlatform;
+                const priceMatch = gamePrice >= minPrice && gamePrice <= maxPrice;
+                const searchMatch = gameName.includes(searchInput);
+
+                if (platformMatch && priceMatch && searchMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Актуализиране на активните филтри
+            updateActiveFilters();
+        }
+    </script>
+</body>
+</html>
